@@ -10,7 +10,7 @@ bot.registry.registerDefaults();
 bot.registry.registerCommandsIn(__dirname + '/Command_Board');
 
 global.currentTeamMembers = [];
-global.servers = [];
+global.servers = {};
 
 bot.on('message', function(message){
     if(message.content == 'Hello'){

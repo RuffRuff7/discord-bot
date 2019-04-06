@@ -4,10 +4,10 @@ const ytdl = require('ytdl-core');
 function Music(connection, message)
 {
     var server = servers[message.guild.id];
-    console.log(typeof(ytdl(server.queue[0])))
-    server.dipatcher = connection.playStream(ytdl(server.queue[0]));
+    console.log(typeof(server.queue[0]))
+    server.dispatcher = connection.playStream(ytdl(`${server.queue[0]}`, {filter: "audioonly"}));
     server.queue.shift();
-    server.dipatcher.on("end", function(){
+    server.dispatcher.on("end", function(){
         if(server.queue[0])
         {
             Music(connection,message);
@@ -45,10 +45,8 @@ class playMusic extends commandoLibrary.Command
                     .then(connection =>{
                         var server = servers[message.guild.id];
                         message.channel.sendMessage('I have joined!');
-                        server.queue.push(`${args}`)
+                        server.queue.push(args)
                         Music(connection, message);
-                    }).catch(err =>{
-                        console.log(err)
                     })
             }
         } else {
